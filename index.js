@@ -5,33 +5,37 @@ const json = require('@scola/api-codec-json');
 const octetStream = require('@scola/api-codec-octet-stream');
 const urlEncoded = require('@scola/api-codec-url-encoded');
 
-function requestEncodings() {
+function requestEncodings(...codecs) {
   return codec.request.encodings(
-    gzip,
-    deflate
+    gzip.decoder(),
+    deflate.decoder(),
+    ...codecs
   );
 }
 
-function requestMediaTypes() {
+function requestMediaTypes(...codecs) {
   return codec.request.mediaTypes(
-    json,
-    urlEncoded,
-    octetStream
+    json.decoder(),
+    urlEncoded.decoder(),
+    octetStream.decoder(),
+    ...codecs
   );
 }
 
-function responseEncodings() {
+function responseEncodings(...codecs) {
   return codec.response.encodings(
-    gzip,
-    deflate
+    gzip.encoder(),
+    deflate.encoder(),
+    ...codecs
   );
 }
 
-function responseMediaTypes() {
+function responseMediaTypes(...codecs) {
   return codec.response.mediaTypes(
-    json,
-    urlEncoded,
-    octetStream
+    json.encoder(),
+    urlEncoded.encoder(),
+    octetStream.encoder(),
+    ...codecs
   );
 }
 
