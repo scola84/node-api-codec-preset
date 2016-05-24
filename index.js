@@ -1,5 +1,6 @@
 const codec = require('@scola/api-codec');
 const deflate = require('@scola/api-codec-deflate');
+const formData = require('@scola/api-codec-form-data');
 const gzip = require('@scola/api-codec-gzip');
 const json = require('@scola/api-codec-json');
 const octetStream = require('@scola/api-codec-octet-stream');
@@ -15,6 +16,7 @@ function requestEncodings(...codecs) {
 
 function requestMediaTypes(...codecs) {
   return codec.request.mediaTypes(
+    formData.decoder(),
     json.decoder(),
     urlEncoded.decoder(),
     octetStream.decoder(),
@@ -33,7 +35,6 @@ function responseEncodings(...codecs) {
 function responseMediaTypes(...codecs) {
   return codec.response.mediaTypes(
     json.encoder(),
-    urlEncoded.encoder(),
     octetStream.encoder(),
     ...codecs
   );
