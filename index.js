@@ -1,62 +1,68 @@
-const codec = require('@scola/api-codec');
-const deflate = require('@scola/api-codec-deflate');
-const formData = require('@scola/api-codec-form-data');
-const gzip = require('@scola/api-codec-gzip');
-const json = require('@scola/api-codec-json');
-const octetStream = require('@scola/api-codec-octet-stream');
-const urlEncoded = require('@scola/api-codec-url-encoded');
+import {
+  requestEncodings as codecRequestEncodings,
+  requestMediaTypes as codecRequestMediaTypes,
+  responseEncodings as codecResponseEncodings,
+  responseMediaTypes as codecResponseMediaTypes
+} from '@scola/api-codec';
 
-function requestEncodings(...codecs) {
-  return codec.request.encodings(
-    gzip.decoder(),
-    deflate.decoder(),
+import {
+  decoder as deflateDecoder,
+  encoder as deflateEncoder
+} from '@scola/api-codec-deflate';
+
+import {
+  decoder as formDataDecoder
+} from '@scola/api-codec-form-data';
+
+import {
+  decoder as gzipDecoder,
+  encoder as gzipEncoder
+} from '@scola/api-codec-gzip';
+
+import {
+  decoder as jsonDecoder,
+  encoder as jsonEncoder
+} from '@scola/api-codec-json';
+
+import {
+  decoder as octetStreamDecoder,
+  encoder as octetStreamEncoder
+} from '@scola/api-codec-octet-stream';
+
+import {
+  decoder as urlEncodedDecoder
+} from '@scola/api-codec-url-encoded';
+
+export function requestEncodings(...codecs) {
+  return codecRequestEncodings(
+    gzipDecoder(),
+    deflateDecoder(),
     ...codecs
   );
 }
 
-function requestMediaTypes(...codecs) {
-  return codec.request.mediaTypes(
-    formData.decoder(),
-    json.decoder(),
-    urlEncoded.decoder(),
-    octetStream.decoder(),
+export function requestMediaTypes(...codecs) {
+  return codecRequestMediaTypes(
+    formDataDecoder(),
+    jsonDecoder(),
+    urlEncodedDecoder(),
+    octetStreamDecoder(),
     ...codecs
   );
 }
 
-function responseEncodings(...codecs) {
-  return codec.response.encodings(
-    gzip.encoder(),
-    deflate.encoder(),
+export function responseEncodings(...codecs) {
+  return codecResponseEncodings(
+    gzipEncoder(),
+    deflateEncoder(),
     ...codecs
   );
 }
 
-function responseMediaTypes(...codecs) {
-  return codec.response.mediaTypes(
-    json.encoder(),
-    octetStream.encoder(),
+export function responseMediaTypes(...codecs) {
+  return codecResponseMediaTypes(
+    jsonEncoder(),
+    octetStreamEncoder(),
     ...codecs
   );
 }
-
-module.exports = {
-  base: codec,
-  encodings: {
-    deflate,
-    gzip
-  },
-  mediaTypes: {
-    json,
-    octetStream,
-    urlEncoded
-  },
-  request: {
-    encodings: requestEncodings,
-    mediaTypes: requestMediaTypes
-  },
-  response: {
-    encodings: responseEncodings,
-    mediaTypes: responseMediaTypes
-  }
-};
