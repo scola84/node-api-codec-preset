@@ -7,8 +7,17 @@
   "license": "MIT",
   "main": "./dist/api-codec-preset.js",
   "jsnext:main": "index.js",
+  "dependencies": {
+    "@scola/api-codec": "^1.0.0",
+    "@scola/api-codec-deflate": "^1.0.0",
+    "@scola/api-codec-form-data": "^1.0.0",
+    "@scola/api-codec-gzip": "^1.0.0",
+    "@scola/api-codec-json": "^1.0.0",
+    "@scola/api-codec-octet-stream": "^1.0.0",
+    "@scola/api-codec-url-encoded": "^1.0.0"
+  },
   "devDependencies": {
-    "rollup": "^0.34.13"
+    "rollup": "^0.35.9"
   },
   "scripts": {
     "build": "rollup -i index.js -o ./dist/api-codec-preset.js -f cjs"
