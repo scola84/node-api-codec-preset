@@ -1,6 +1,6 @@
 {
   "name": "@scola/api-codec-preset",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Codec Preset",
   "repository": "github:scola84/node-api-codec-preset",
   "author": "M.C. van den Boogaart <scola@kvdb.name>",
