@@ -17,9 +17,16 @@
     "@scola/api-codec-url-encoded": "^1.0.0"
   },
   "devDependencies": {
-    "rollup": "^0.35.9"
+    "rollup": "^0.36.1",
+    "rollup-plugin-buble": "^0.14.0",
+    "uglify-js": "^2.7.3"
   },
   "scripts": {
-    "build": "rollup -i index.js -o ./dist/api-codec-preset.js -f cjs"
+    "build": "npm run cleanup && npm run rollup",
+    "build:min": "npm run build && npm run min",
+    "cleanup": "rm -rf dist",
+    "min": "uglifyjs dist/api-codec-preset.js -m -o dist/api-codec-preset.min.js",
+    "prepublish": "npm run build:min",
+    "rollup": "rollup -c"
   }
 }
